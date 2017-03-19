@@ -135,10 +135,12 @@ print (names_and_productivities)
 ## [PROBLEM 8]
 print("\n\n***** Problem 8 *****")
 # Use the Python filter function to select the subset of programmers who have names with 5 or more characters. (i.e. ["Albert","Dinesh","Euijin"]) Your result should be an filter object that points to Student instances. Save that filter iterator in a variable called long_names.
+long_names = filter(lambda x: len(x.name)>=5, programmers)
 
 
 
 ## Then write code to cast the value of long_names to a list and save it in the variable long_names_list. 
+long_names_list = list(long_names)
 
 
 
@@ -149,17 +151,30 @@ print("\n\n***** Problem 9 *****")
 
 ## Note that you can use another list you have already created for this problem.
 
-
-
+names_with_not_too_much_seniority = [x.name for x in programmers if len(x.name) > x.years_UM]
+print(names_with_not_too_much_seniority)
 
 ## [PROBLEM 10]
 print("\n\n***** Problem 10 *****")
 
 ## Define a function called readfiles, which accepts a list of filenames as input and yields each line in each of the file with that name, assuming those files exist in the same directory as this program.
+def readfiles(filenames):
+    for f in filenames:
+        fileref = open(f, "r")
+        for l in fileref:
+            yield l
+        fileref.close()
+
+
+
 
 ## Define a generator called len_check which accepts a generator of file lines and returns a generator object of all the lines it's accepted whose length is longer than 40 characters.
+def len_check(x):
+    return(line for line in x if len(line) > 40)
 
 ## Finally, write a function called main_filterer that accepts a list of filenames (strings), and returns a generator of all the lines in those files that are longer than 40 characters. The function should invoke the other function and generator, readfiles and len_check.
+def main_filterer(filenames):
+    return(len_check(readfiles(filenames)))
 
 ## There is a test for this but an even more fun test is to uncomment the code below which invokes the main_filterer function and prints each line from the generator without blank lines in between (that's what the comma is doing).
 
